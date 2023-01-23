@@ -1,8 +1,7 @@
-from sqlalchemy import Integer,String, Column,DateTime,Boolean,TIMESTAMP
+from sqlalchemy import Integer,String, Column,DateTime,Boolean,TIMESTAMP,ForeignKey
 from .database import Base
 from datetime import datetime
 from sqlalchemy.sql import func
-
 
 class Post(Base):
     __tablename__ = 'posts'
@@ -13,7 +12,7 @@ class Post(Base):
     rating = Column(Integer)
     created_at = Column(TIMESTAMP(timezone=True),server_default=func.now())
     updated_at = Column(TIMESTAMP(timezone=True),onupdate=func.now())
-
+    owner_id = Column(Integer,ForeignKey('users.id',ondelete='CASCADE'),nullable=False)
 
 class User(Base):
     __tablename__ = 'users'
